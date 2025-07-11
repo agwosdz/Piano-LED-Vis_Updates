@@ -388,3 +388,64 @@ FileNotFoundError: [WinError 2] The system cannot find the file specified
 [2025-07-11 18:10:24] INFO - Enabling Hotspot
 [2025-07-11 18:10:29] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
 [2025-07-11 18:10:29] WARNING - Failed to start hotspot
+[2025-07-11 18:20:26] WARNING - Error while getting ports 'NoneType' object has no attribute 'poll'
+[2025-07-11 18:20:39] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 217, in <module>
+    app.run()
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 119, in run
+    self.check_screensaver()
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 154, in check_screensaver
+    screensaver(self.component_initializer.menu, self.component_initializer.midiports,
+  File "H:\Piano-LED-Visualizer\lib\functions.py", line 294, in screensaver
+    time.sleep(delay)
+KeyboardInterrupt
+[2025-07-11 18:20:40] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 18:20:40] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 18:20:40] WARNING - Module spidev not found.
+[2025-07-11 18:20:40] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 18, in <module>
+    from lib.gpio_handler import GPIOHandler
+  File "H:\Piano-LED-Visualizer\lib\gpio_handler.py", line 2, in <module>
+    import RPi.GPIO as GPIO
+ModuleNotFoundError: No module named 'RPi'
+[2025-07-11 18:20:52] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 18:20:52] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 18:20:52] WARNING - Module spidev not found.
+[2025-07-11 18:20:53] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 18:20:53] INFO - Playport loaded and set to Microsoft GS Wavetable Synth 0
+[2025-07-11 18:20:53] WARNING - 'NoneType' object has no attribute 'WS2811_STRIP_GRB'
+[2025-07-11 18:20:53] INFO - Failed to load LED strip.  Using emu driver.
+[2025-07-11 18:20:53] WARNING - Failed to load enhanced colors, using defaults: malformed node or string: None
+[2025-07-11 18:20:53] WARNING - Failed to load flying notes settings, using defaults: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-11 18:20:54] INFO - Skipping connectall.py script copy on Windows
+[2025-07-11 18:20:54] INFO - Skipping abcmidi installation on Windows
+[2025-07-11 18:20:54] INFO - Namespace(clear=False, display=None, fontdir=None, port=None, skipupdate=False, webinterface=None, rotatescreen='false', appmode='platform', leddriver='rpi_ws281x')
+[2025-07-11 18:20:54] INFO - SPI is not enabled. Enabling SPI interface...
+[2025-07-11 18:20:54] WARNING - Failed to enable SPI: Command '['sudo', 'raspi-config', 'nonint', 'do_spi', '0']' returned non-zero exit status 2147942405.
+[2025-07-11 18:20:54] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 216, in <module>
+    app = VisualizerApp()
+          ^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 57, in __init__
+    self.gpio_handler = GPIOHandler(self.args, self.component_initializer.midiports, self.component_initializer.menu,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\gpio_handler.py", line 46, in __init__
+    self.setup_gpio()
+  File "H:\Piano-LED-Visualizer\lib\gpio_handler.py", line 69, in setup_gpio
+    GPIO.setup(self.KEYRIGHT, GPIO.IN, GPIO.PUD_UP)
+                                       ^^^^^^^^^^^
+AttributeError: 'MockGPIO' object has no attribute 'PUD_UP'
+[2025-07-11 18:21:08] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 18:21:08] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 18:21:08] WARNING - Module spidev not found.
+[2025-07-11 18:21:08] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 18, in <module>
+    from lib.gpio_handler import GPIOHandler
+  File "H:\Piano-LED-Visualizer\lib\gpio_handler.py", line 15
+    @staticmethod
+                 ^
+IndentationError: unindent does not match any outer indentation level

@@ -1,6 +1,11 @@
 import time
 
-import rpi_ws281x.Color as Color
+try:
+    from rpi_ws281x import Color
+except ImportError:
+    # Fallback for when rpi_ws281x is not available
+    def Color(red, green, blue):
+        return (red << 16) | (green << 8) | blue
 
 from lib.functions import get_note_position, find_between
 from lib.log_setup import logger
