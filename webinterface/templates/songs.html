@@ -656,6 +656,144 @@
                 </div>
             </div>
 
+            <!-- Enhanced Learn Controls -->
+            <div class="w-full m-auto mt-6">
+                <div class="flex justify-center mb-4">
+                    <button onclick="window.open('/flying_notes', '_blank')" 
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mr-4">
+                        🎹 Flying Notes Visualizer
+                    </button>
+                    <button onclick="toggleEnhancedColors()" 
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+                        🎨 Enhanced Colors
+                    </button>
+                </div>
+                
+                <div id="enhanced_colors_panel" class="hidden bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-700 dark:text-gray-300">Enhanced Color Settings</h3>
+                    
+                    <!-- Left Hand Colors -->
+                    <div class="mb-4">
+                        <h4 class="font-semibold mb-2 text-gray-600 dark:text-gray-400">Left Hand</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Current</label>
+                                <input type="color" id="left_white_current" class="w-full h-8 rounded" value="#0000FF">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Upcoming</label>
+                                <input type="color" id="left_white_upcoming" class="w-full h-8 rounded" value="#4444FF">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Current</label>
+                                <input type="color" id="left_black_current" class="w-full h-8 rounded" value="#0000AA">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Upcoming</label>
+                                <input type="color" id="left_black_upcoming" class="w-full h-8 rounded" value="#3333AA">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Hand Colors -->
+                    <div class="mb-4">
+                        <h4 class="font-semibold mb-2 text-gray-600 dark:text-gray-400">Right Hand</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Current</label>
+                                <input type="color" id="right_white_current" class="w-full h-8 rounded" value="#FF0000">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Upcoming</label>
+                                <input type="color" id="right_white_upcoming" class="w-full h-8 rounded" value="#FF4444">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Current</label>
+                                <input type="color" id="right_black_current" class="w-full h-8 rounded" value="#AA0000">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Upcoming</label>
+                                <input type="color" id="right_black_upcoming" class="w-full h-8 rounded" value="#AA3333">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center">
+                        <button onclick="saveEnhancedColors()" 
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Save Colors
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            function toggleEnhancedColors() {
+                const panel = document.getElementById('enhanced_colors_panel');
+                panel.classList.toggle('hidden');
+                if (!panel.classList.contains('hidden')) {
+                    loadEnhancedColors();
+                }
+            }
+            
+            function loadEnhancedColors() {
+                fetch('/api/learn_colors/settings')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.left_hand) {
+                            document.getElementById('left_white_current').value = data.left_hand.white_current || '#0000FF';
+                            document.getElementById('left_white_upcoming').value = data.left_hand.white_upcoming || '#4444FF';
+                            document.getElementById('left_black_current').value = data.left_hand.black_current || '#0000AA';
+                            document.getElementById('left_black_upcoming').value = data.left_hand.black_upcoming || '#3333AA';
+                        }
+                        if (data.right_hand) {
+                            document.getElementById('right_white_current').value = data.right_hand.white_current || '#FF0000';
+                            document.getElementById('right_white_upcoming').value = data.right_hand.white_upcoming || '#FF4444';
+                            document.getElementById('right_black_current').value = data.right_hand.black_current || '#AA0000';
+                            document.getElementById('right_black_upcoming').value = data.right_hand.black_upcoming || '#AA3333';
+                        }
+                    })
+                    .catch(error => console.error('Error loading enhanced colors:', error));
+            }
+            
+            function saveEnhancedColors() {
+                const colorSettings = {
+                    left_hand: {
+                        white_current: document.getElementById('left_white_current').value,
+                        white_upcoming: document.getElementById('left_white_upcoming').value,
+                        black_current: document.getElementById('left_black_current').value,
+                        black_upcoming: document.getElementById('left_black_upcoming').value
+                    },
+                    right_hand: {
+                        white_current: document.getElementById('right_white_current').value,
+                        white_upcoming: document.getElementById('right_white_upcoming').value,
+                        black_current: document.getElementById('right_black_current').value,
+                        black_upcoming: document.getElementById('right_black_upcoming').value
+                    }
+                };
+                
+                fetch('/api/learn_colors/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(colorSettings)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Enhanced colors saved successfully!');
+                    } else {
+                        alert('Error saving colors: ' + (data.error || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving enhanced colors:', error);
+                    alert('Error saving colors');
+                });
+            }
+            </script>
+
             <div id="sheet_wrapper" style="height:80vh; margin-bottom: 100px;">
                 {% include 'sheet_music.html' %}
             </div>

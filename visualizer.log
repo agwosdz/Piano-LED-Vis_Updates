@@ -1,0 +1,197 @@
+[2025-07-11 17:45:12] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:45:12] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:45:12] WARNING - Module spidev not found.
+[2025-07-11 17:45:12] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 15, in <module>
+    from lib.component_initializer import ComponentInitializer
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 4, in <module>
+    from lib import colormaps as cmap
+  File "H:\Piano-LED-Visualizer\lib\colormaps.py", line 1, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+[2025-07-11 17:45:58] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:45:58] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:45:58] WARNING - Module spidev not found.
+[2025-07-11 17:45:58] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 15, in <module>
+    from lib.component_initializer import ComponentInitializer
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 4, in <module>
+    from lib import colormaps as cmap
+  File "H:\Piano-LED-Visualizer\lib\colormaps.py", line 1, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+[2025-07-11 17:46:31] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:46:31] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:46:31] WARNING - Module spidev not found.
+[2025-07-11 17:46:31] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 15, in <module>
+    from lib.component_initializer import ComponentInitializer
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 5, in <module>
+    from lib.functions import startup_animation, fastColorWipe
+  File "H:\Piano-LED-Visualizer\lib\functions.py", line 6, in <module>
+    import psutil
+ModuleNotFoundError: No module named 'psutil'
+[2025-07-11 17:46:45] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:46:45] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:46:45] WARNING - Module spidev not found.
+[2025-07-11 17:46:45] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 15, in <module>
+    from lib.component_initializer import ComponentInitializer
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 10, in <module>
+    from lib.menulcd import MenuLCD
+  File "H:\Piano-LED-Visualizer\lib\menulcd.py", line 6, in <module>
+    import webcolors as wc
+ModuleNotFoundError: No module named 'webcolors'
+[2025-07-11 17:47:01] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:47:01] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:47:01] WARNING - Module spidev not found.
+[2025-07-11 17:47:01] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 18, in <module>
+    from lib.gpio_handler import GPIOHandler
+  File "H:\Piano-LED-Visualizer\lib\gpio_handler.py", line 3, in <module>
+    from RPi import GPIO
+ModuleNotFoundError: No module named 'RPi'
+[2025-07-11 17:47:30] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:47:30] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:47:30] WARNING - Module spidev not found.
+[2025-07-11 17:47:30] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 19, in <module>
+    from lib.led_effects_processor import LEDEffectsProcessor
+  File "H:\Piano-LED-Visualizer\lib\led_effects_processor.py", line 1, in <module>
+    from rpi_ws281x import Color
+ModuleNotFoundError: No module named 'rpi_ws281x'
+[2025-07-11 17:47:56] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:47:56] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:47:56] WARNING - Module spidev not found.
+[2025-07-11 17:47:57] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 23, in <module>
+    from lib.midi_event_processor import MIDIEventProcessor
+  File "H:\Piano-LED-Visualizer\lib\midi_event_processor.py", line 3, in <module>
+    from rpi_ws281x import Color
+ModuleNotFoundError: No module named 'rpi_ws281x'
+[2025-07-11 17:48:19] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:48:19] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:48:19] WARNING - Module spidev not found.
+[2025-07-11 17:48:19] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 25, in <module>
+    from lib.webinterface_manager import WebInterfaceManager
+  File "H:\Piano-LED-Visualizer\lib\webinterface_manager.py", line 5, in <module>
+    from waitress import serve
+ModuleNotFoundError: No module named 'waitress'
+[2025-07-11 17:48:34] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:48:34] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:48:34] WARNING - Module spidev not found.
+[2025-07-11 17:48:34] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 25, in <module>
+    from lib.webinterface_manager import WebInterfaceManager
+  File "H:\Piano-LED-Visualizer\lib\webinterface_manager.py", line 5, in <module>
+    from waitress import serve
+ModuleNotFoundError: No module named 'waitress'
+[2025-07-11 17:48:47] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:48:47] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:48:47] WARNING - Module spidev not found.
+[2025-07-11 17:48:47] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 25, in <module>
+    from lib.webinterface_manager import WebInterfaceManager
+  File "H:\Piano-LED-Visualizer\lib\webinterface_manager.py", line 7, in <module>
+    import webinterface as web_mod
+  File "H:\Piano-LED-Visualizer\webinterface\__init__.py", line 3, in <module>
+    import websockets
+ModuleNotFoundError: No module named 'websockets'
+[2025-07-11 17:49:02] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:49:02] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:49:02] WARNING - Module spidev not found.
+[2025-07-11 17:49:03] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 17:49:11] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:49:11] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:49:11] WARNING - Module spidev not found.
+[2025-07-11 17:49:12] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 17:49:17] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:49:17] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:49:17] WARNING - Module spidev not found.
+[2025-07-11 17:49:18] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 17:49:18] WARNING - Can't load settings file, restoring defaults
+[2025-07-11 17:49:18] INFO - no play port
+[2025-07-11 17:49:18] WARNING - 'NoneType' object has no attribute 'WS2811_STRIP_GRB'
+[2025-07-11 17:49:18] INFO - Failed to load LED strip.  Using emu driver.
+[2025-07-11 17:49:18] WARNING - Failed to load enhanced colors, using defaults: malformed node or string: None
+[2025-07-11 17:49:18] WARNING - Failed to load flying notes settings, using defaults: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-11 17:49:18] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 216, in <module>
+    app = VisualizerApp()
+          ^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 48, in __init__
+    self.component_initializer = ComponentInitializer(self.args)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 26, in __init__
+    self.hotspot = Hotspot(self.platform)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\platform.py", line 19, in __init__
+    subprocess.run("sudo chmod a+rwxX -R /home/Piano-LED-Visualizer/", shell=True, check=True)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'sudo chmod a+rwxX -R /home/Piano-LED-Visualizer/' returned non-zero exit status 2147942405.
+[2025-07-11 17:49:40] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:49:40] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:49:40] WARNING - Module spidev not found.
+[2025-07-11 17:49:41] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 17:49:41] INFO - no play port
+[2025-07-11 17:49:41] WARNING - 'NoneType' object has no attribute 'WS2811_STRIP_GRB'
+[2025-07-11 17:49:41] INFO - Failed to load LED strip.  Using emu driver.
+[2025-07-11 17:49:41] WARNING - Failed to load enhanced colors, using defaults: malformed node or string: None
+[2025-07-11 17:49:41] WARNING - Failed to load flying notes settings, using defaults: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-11 17:49:41] INFO - Skipping Linux-specific chmod command on Windows platform
+[2025-07-11 17:49:41] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 216, in <module>
+    app = VisualizerApp()
+          ^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 48, in __init__
+    self.component_initializer = ComponentInitializer(self.args)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 28, in __init__
+    self.menu = MenuLCD("config/menu.xml", self.args, self.usersettings, self.ledsettings,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\menulcd.py", line 39, in __init__
+    raise RuntimeError("Cannot locate font file: %s" % self.lcd_ttf)
+RuntimeError: Cannot locate font file: /usr/share/fonts/truetype/freefont/FreeSansBold.ttf
+[2025-07-11 17:51:39] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 17:51:39] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 17:51:39] WARNING - Module spidev not found.
+[2025-07-11 17:51:40] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-11 17:51:40] INFO - no play port
+[2025-07-11 17:51:40] WARNING - 'NoneType' object has no attribute 'WS2811_STRIP_GRB'
+[2025-07-11 17:51:40] INFO - Failed to load LED strip.  Using emu driver.
+[2025-07-11 17:51:40] WARNING - Failed to load enhanced colors, using defaults: malformed node or string: None
+[2025-07-11 17:51:40] WARNING - Failed to load flying notes settings, using defaults: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-11 17:51:40] INFO - Skipping Linux-specific chmod command on Windows platform
+[2025-07-11 17:51:40] INFO - connectall.py script is outdated, updating...
+[2025-07-11 17:51:40] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 216, in <module>
+    app = VisualizerApp()
+          ^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 48, in __init__
+    self.component_initializer = ComponentInitializer(self.args)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 31, in __init__
+    self.setup_components()
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 35, in setup_components
+    self.platform.copy_connectall_script()
+  File "H:\Piano-LED-Visualizer\lib\platform.py", line 65, in copy_connectall_script
+    copyfile('lib/connectall.py', '/usr/local/bin/connectall.py')
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 258, in copyfile
+    with open(dst, 'wb') as fdst:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/usr/local/bin/connectall.py'

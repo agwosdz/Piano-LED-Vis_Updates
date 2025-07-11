@@ -1,8 +1,13 @@
 from webinterface import webinterface, app_state
 from flask import render_template, request, jsonify
 import os
-
 import time
+from lib.flying_notes_renderer import FlyingNotesRenderer
+from lib.websocket_handler import WebSocketHandler, FlyingNotesWebSocketClient
+
+# Global instances for flying notes functionality
+flying_notes_renderer = None
+websocket_handler = None
 
 ALLOWED_EXTENSIONS = {'mid', 'musicxml', 'mxl', 'xml', 'abc'}
 
@@ -59,6 +64,100 @@ def ports():
 @webinterface.route('/network')
 def network():
     return render_template('network.html')
+
+
+@webinterface.route('/flying_notes')
+def flying_notes():
+    return render_template('flying_notes.html')
+
+
+@webinterface.route('/api/flying_notes/start', methods=['POST'])
+def start_flying_notes():
+    """API endpoint to start flying notes animation"""
+    try:
+        if flying_notes_renderer:
+            flying_notes_renderer.start_animation()
+            return jsonify(success=True, message="Flying notes animation started")
+        else:
+            return jsonify(success=False, error="Flying notes renderer not initialized")
+    except Exception as e:
+        return jsonify(success=False, error=str(e))
+
+
+@webinterface.route('/api/flying_notes/stop', methods=['POST'])
+def stop_flying_notes():
+    """API endpoint to stop flying notes animation"""
+    try:
+        if flying_notes_renderer:
+            flying_notes_renderer.stop_animation()
+            return jsonify(success=True, message="Flying notes animation stopped")
+        else:
+            return jsonify(success=False, error="Flying notes renderer not initialized")
+    except Exception as e:
+        return jsonify(success=False, error=str(e))
+
+
+@webinterface.route('/api/flying_notes/settings', methods=['GET', 'POST'])
+def flying_notes_settings():
+    """API endpoint to get or update flying notes settings"""
+    try:
+        if not flying_notes_renderer:
+            return jsonify(success=False, error="Flying notes renderer not initialized")
+        
+        if request.method == 'GET':
+            settings = flying_notes_renderer.get_settings()
+            return jsonify(success=True, settings=settings)
+        
+        elif request.method == 'POST':
+            new_settings = request.get_json()
+            flying_notes_renderer.update_settings(new_settings)
+            return jsonify(success=True, message="Settings updated")
+    
+    except Exception as e:
+        return jsonify(success=False, error=str(e))
+
+
+@webinterface.route('/api/learn_colors/settings', methods=['GET', 'POST'])
+def learn_colors_settings():
+    """API endpoint to get or update enhanced learn color settings"""
+    try:
+        if request.method == 'GET':
+            # Get current color settings from usersettings
+            settings = {
+                'left_hand': {
+                    'white_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/white_current"),
+                    'white_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/white_upcoming"),
+                    'black_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/black_current"),
+                    'black_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/black_upcoming")
+                },
+                'right_hand': {
+                    'white_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/white_current"),
+                    'white_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/white_upcoming"),
+                    'black_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/black_current"),
+                    'black_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/black_upcoming")
+                }
+            }
+            return jsonify(success=True, settings=settings)
+        
+        elif request.method == 'POST':
+            new_settings = request.get_json()
+            
+            # Update color settings in usersettings
+            for hand in ['left_hand', 'right_hand']:
+                if hand in new_settings:
+                    for key_type in ['white_current', 'white_upcoming', 'black_current', 'black_upcoming']:
+                        if key_type in new_settings[hand]:
+                            setting_path = f"enhanced_learn_colors/{hand}/{key_type}"
+                            app_state.usersettings.change_setting_value(setting_path, new_settings[hand][key_type])
+            
+            # Reload settings in LearnMIDI if available
+            if hasattr(app_state, 'learning') and app_state.learning:
+                app_state.learning._load_enhanced_colors()
+            
+            return jsonify(success=True, message="Color settings updated")
+    
+    except Exception as e:
+        return jsonify(success=False, error=str(e))
 
 
 @webinterface.route('/upload', methods=['POST'])

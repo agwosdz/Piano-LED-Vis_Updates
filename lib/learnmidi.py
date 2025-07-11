@@ -72,6 +72,10 @@ class LearnMIDI:
         self.handsList = ['Both', 'Right', 'Left']
         self.mute_handList = ['Off', 'Right', 'Left']
         self.hand_colorList = ast.literal_eval(usersettings.get_setting_value("hand_colorList"))
+        
+        # Enhanced color settings
+        self.learn_colors = self._load_enhanced_colors()
+        self.flying_notes_settings = self._load_flying_notes_settings()
 
         self.song_tempo = 500000
         self.song_tracks = []
@@ -85,6 +89,112 @@ class LearnMIDI:
         self.mistakes_count = 0
         self.number_of_mistakes = int(usersettings.get_setting_value("number_of_mistakes"))
         self.awaiting_restart_loop = False
+
+    def _load_enhanced_colors(self):
+        """Load enhanced color settings from user settings"""
+        try:
+            learn_colors = {
+                'left_hand': {
+                    'white_keys': {
+                        'current': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/left_hand/white_keys/current")),
+                        'upcoming': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/left_hand/white_keys/upcoming"))
+                    },
+                    'black_keys': {
+                        'current': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/left_hand/black_keys/current")),
+                        'upcoming': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/left_hand/black_keys/upcoming"))
+                    }
+                },
+                'right_hand': {
+                    'white_keys': {
+                        'current': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/right_hand/white_keys/current")),
+                        'upcoming': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/right_hand/white_keys/upcoming"))
+                    },
+                    'black_keys': {
+                        'current': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/right_hand/black_keys/current")),
+                        'upcoming': ast.literal_eval(self.usersettings.get_setting_value("learn_colors/right_hand/black_keys/upcoming"))
+                    }
+                }
+            }
+            return learn_colors
+        except Exception as e:
+            logger.warning(f"Failed to load enhanced colors, using defaults: {e}")
+            # Return default colors if loading fails
+            return {
+                'left_hand': {
+                    'white_keys': {'current': [0, 255, 0], 'upcoming': [0, 128, 0]},
+                    'black_keys': {'current': [0, 200, 0], 'upcoming': [0, 100, 0]}
+                },
+                'right_hand': {
+                    'white_keys': {'current': [0, 0, 255], 'upcoming': [0, 0, 128]},
+                    'black_keys': {'current': [0, 0, 200], 'upcoming': [0, 0, 100]}
+                }
+            }
+
+    def _load_flying_notes_settings(self):
+        """Load flying notes settings from user settings"""
+        try:
+            return {
+                'enabled': int(self.usersettings.get_setting_value("flying_notes/enabled")),
+                'speed': float(self.usersettings.get_setting_value("flying_notes/speed")),
+                'note_height': int(self.usersettings.get_setting_value("flying_notes/note_height")),
+                'keyboard_height': int(self.usersettings.get_setting_value("flying_notes/keyboard_height")),
+                'show_measures': int(self.usersettings.get_setting_value("flying_notes/show_measures")),
+                'animation_smoothness': int(self.usersettings.get_setting_value("flying_notes/animation_smoothness"))
+            }
+        except Exception as e:
+            logger.warning(f"Failed to load flying notes settings, using defaults: {e}")
+            return {
+                'enabled': 0,
+                'speed': 1.0,
+                'note_height': 20,
+                'keyboard_height': 80,
+                'show_measures': 1,
+                'animation_smoothness': 60
+            }
+
+    def get_note_type(self, note):
+        """Determine if note is white or black key"""
+        # MIDI note numbers: C=0, C#=1, D=2, D#=3, E=4, F=5, F#=6, G=7, G#=8, A=9, A#=10, B=11
+        # Black keys are: C#, D#, F#, G#, A# (1, 3, 6, 8, 10)
+        note_in_octave = note % 12
+        return 'black' if note_in_octave in [1, 3, 6, 8, 10] else 'white'
+
+    def get_learn_color(self, hand, note_type, is_upcoming=False):
+        """Get color based on hand, note type, and timing"""
+        hand_key = 'left_hand' if hand == 'left' else 'right_hand'
+        note_key = 'white_keys' if note_type == 'white' else 'black_keys'
+        timing_key = 'upcoming' if is_upcoming else 'current'
+        
+        try:
+            return self.learn_colors[hand_key][note_key][timing_key]
+        except KeyError:
+            # Fallback to original color system
+            if hand == 'left':
+                return self.hand_colorList[self.hand_colorL]
+            else:
+                return self.hand_colorList[self.hand_colorR]
+
+    def light_up_enhanced_notes(self, notes, is_upcoming=False):
+        """Enhanced note lighting with new color system"""
+        brightness = 0.5
+        if is_upcoming:
+            brightness /= 10  # Dim upcoming notes
+            
+        for msg in notes:
+            if not msg.is_meta and (msg.type == 'note_on' or msg.type == 'note_off'):
+                note_position = get_note_position(msg.note, self.ledstrip, self.ledsettings)
+                note_type = self.get_note_type(msg.note)
+                
+                # Determine hand based on channel
+                hand = 'right' if msg.channel == 1 else 'left'
+                
+                # Get enhanced color
+                color = self.get_learn_color(hand, note_type, is_upcoming)
+                red, green, blue = [int(c * brightness) for c in color]
+                
+                self.ledstrip.strip.setPixelColor(note_position, Color(red, green, blue))
+        
+        self.ledstrip.strip.show()
 
     def add_instance(self, menu):
         self.menu = menu
@@ -262,30 +372,8 @@ class LearnMIDI:
             current_note += 1
 
     def light_up_predicted_future_notes(self, notes):
-        dim = 10
-        for msg in notes:
-            # Light-up LEDs with the notes to press
-            if not msg.is_meta:
-                # Calculate note position on the strip and display
-                if msg.type == 'note_on' or msg.type == 'note_off':
-                    note_position = get_note_position(msg.note, self.ledstrip, self.ledsettings)
-
-                    brightness = 0.5
-                    brightness /= dim
-                    red, green, blue = [0, 0, 0]
-                    if msg.channel == 1:
-                        # red = int(self.hand_colorList[self.hand_colorR][0] * brightness)
-                        # green = int(self.hand_colorList[self.hand_colorR][1] * brightness)
-                        # blue = int(self.hand_colorList[self.hand_colorR][2] * brightness)
-                        red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.hand_colorR]]
-                    if msg.channel == 2:
-                        # red = int(self.hand_colorList[self.hand_colorL][0] * brightness)
-                        # green = int(self.hand_colorList[self.hand_colorL][1] * brightness)
-                        # blue = int(self.hand_colorList[self.hand_colorL][2] * brightness)
-                        red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.hand_colorL]]
-
-                    self.ledstrip.strip.setPixelColor(note_position, Color(red, green, blue))
-                    self.ledstrip.strip.show()
+        """Light up future notes using enhanced color system"""
+        self.light_up_enhanced_notes(notes, is_upcoming=True)
 
     def handle_wrong_notes(self, wrong_notes, hand_hint_notesL, hand_hint_notesR):
 
@@ -458,27 +546,29 @@ class LearnMIDI:
                             else:
                                 brightness = 0.5
 
-                            red, green, blue = [0, 0, 0]
-                            if msg.channel == 1:
-                                red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.hand_colorR]]
-                                if self.is_led_activeR == 0:
-                                    if brightness > 0:
-                                        hand_hint_notesR.append(note_position)
-                                    else:
-                                        try:
-                                            hand_hint_notesR.remove(note_position)
-                                        except ValueError:
-                                            pass  # do nothing
-                            if msg.channel == 2:
-                                red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.hand_colorL]]
-                                if self.is_led_activeL == 0:
-                                    if brightness > 0:
-                                        hand_hint_notesL.append(note_position)
-                                    else:
-                                        try:
-                                            hand_hint_notesL.remove(note_position)
-                                        except ValueError:
-                                            pass  # do nothing
+                            # Use enhanced color system
+                            note_type = self.get_note_type(msg.note)
+                            hand = 'right' if msg.channel == 1 else 'left'
+                            color = self.get_learn_color(hand, note_type, is_upcoming=False)
+                            red, green, blue = [int(c * brightness) for c in color]
+                            
+                            # Handle LED activity settings
+                            if msg.channel == 1 and self.is_led_activeR == 0:
+                                if brightness > 0:
+                                    hand_hint_notesR.append(note_position)
+                                else:
+                                    try:
+                                        hand_hint_notesR.remove(note_position)
+                                    except ValueError:
+                                        pass  # do nothing
+                            elif msg.channel == 2 and self.is_led_activeL == 0:
+                                if brightness > 0:
+                                    hand_hint_notesL.append(note_position)
+                                else:
+                                    try:
+                                        hand_hint_notesL.remove(note_position)
+                                    except ValueError:
+                                        pass  # do nothing
                             self.ledstrip.strip.setPixelColor(note_position, Color(red, green, blue))
                             self.ledstrip.strip.show()
                         # Save notes to press

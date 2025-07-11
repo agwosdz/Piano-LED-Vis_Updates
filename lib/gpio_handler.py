@@ -1,5 +1,4 @@
 import time
-
 from RPi import GPIO
 
 from lib.functions import fastColorWipe

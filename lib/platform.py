@@ -8,6 +8,7 @@ from lib.log_setup import logger
 import re
 import socket
 from collections import defaultdict
+import platform
 
 
 class Hotspot:
