@@ -195,3 +195,15 @@ Traceback (most recent call last):
     with open(dst, 'wb') as fdst:
          ^^^^^^^^^^^^^^^
 FileNotFoundError: [Errno 2] No such file or directory: '/usr/local/bin/connectall.py'
+[2025-07-11 18:02:38] WARNING - RPi GPIO failed, using null driver.
+[2025-07-11 18:02:38] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-11 18:02:38] WARNING - Module spidev not found.
+[2025-07-11 18:02:38] ERROR - Unhandled Exception: 
+Traceback (most recent call last):
+  File "H:\Piano-LED-Visualizer\visualizer.py", line 15, in <module>
+    from lib.component_initializer import ComponentInitializer
+  File "H:\Piano-LED-Visualizer\lib\component_initializer.py", line 5, in <module>
+    from lib.functions import startup_animation, fastColorWipe
+  File "H:\Piano-LED-Visualizer\lib\functions.py", line 4, in <module>
+    import mido
+ModuleNotFoundError: No module named 'mido'
