@@ -125,16 +125,16 @@ def learn_colors_settings():
             # Get current color settings from usersettings
             settings = {
                 'left_hand': {
-                    'white_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/white_current"),
-                    'white_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/white_upcoming"),
-                    'black_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/black_current"),
-                    'black_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/left_hand/black_upcoming")
+                    'white_current': app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/current"),
+                    'white_upcoming': app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/upcoming"),
+                    'black_current': app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/current"),
+                    'black_upcoming': app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/upcoming")
                 },
                 'right_hand': {
-                    'white_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/white_current"),
-                    'white_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/white_upcoming"),
-                    'black_current': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/black_current"),
-                    'black_upcoming': app_state.usersettings.get_setting_value("enhanced_learn_colors/right_hand/black_upcoming")
+                    'white_current': app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/current"),
+                    'white_upcoming': app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/upcoming"),
+                    'black_current': app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/current"),
+                    'black_upcoming': app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/upcoming")
                 }
             }
             return jsonify(success=True, settings=settings)
@@ -145,10 +145,18 @@ def learn_colors_settings():
             # Update color settings in usersettings
             for hand in ['left_hand', 'right_hand']:
                 if hand in new_settings:
-                    for key_type in ['white_current', 'white_upcoming', 'black_current', 'black_upcoming']:
-                        if key_type in new_settings[hand]:
-                            setting_path = f"enhanced_learn_colors/{hand}/{key_type}"
-                            app_state.usersettings.change_setting_value(setting_path, new_settings[hand][key_type])
+                    if 'white_current' in new_settings[hand]:
+                        setting_path = f"learn_colors/{hand}/white_keys/current"
+                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['white_current'])
+                    if 'white_upcoming' in new_settings[hand]:
+                        setting_path = f"learn_colors/{hand}/white_keys/upcoming"
+                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['white_upcoming'])
+                    if 'black_current' in new_settings[hand]:
+                        setting_path = f"learn_colors/{hand}/black_keys/current"
+                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['black_current'])
+                    if 'black_upcoming' in new_settings[hand]:
+                        setting_path = f"learn_colors/{hand}/black_keys/upcoming"
+                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['black_upcoming'])
             
             # Reload settings in LearnMIDI if available
             if hasattr(app_state, 'learning') and app_state.learning:

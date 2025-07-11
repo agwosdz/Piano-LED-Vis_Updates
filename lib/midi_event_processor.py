@@ -1,6 +1,6 @@
 import time
 
-from rpi_ws281x import Color
+import rpi_ws281x.Color as Color
 
 from lib.functions import get_note_position, find_between
 from lib.log_setup import logger
