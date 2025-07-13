@@ -579,3 +579,29 @@ IndentationError: unindent does not match any outer indentation level
 [2025-07-12 21:28:57] INFO - Enabling Hotspot
 [2025-07-12 21:29:02] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
 [2025-07-12 21:29:02] WARNING - Failed to start hotspot
+[2025-07-12 21:30:48] WARNING - WebSocket handler error: 'ServerConnection' object has no attribute 'path'
+[2025-07-12 21:32:14] WARNING - RPi GPIO failed, using null driver.
+[2025-07-12 21:32:14] WARNING - Module rpi_ws281x not found, using null driver.
+[2025-07-12 21:32:14] WARNING - Module spidev not found.
+[2025-07-12 21:32:14] INFO - [ensure_singleton] Singleton check skipped on Windows platform
+[2025-07-12 21:32:14] INFO - Playport loaded and set to Microsoft GS Wavetable Synth 0
+[2025-07-12 21:32:14] WARNING - 'NoneType' object has no attribute 'WS2811_STRIP_GRB'
+[2025-07-12 21:32:14] INFO - Failed to load LED strip.  Using emu driver.
+[2025-07-12 21:32:14] WARNING - Failed to load enhanced colors, using defaults: malformed node or string: None
+[2025-07-12 21:32:14] WARNING - Failed to load flying notes settings, using defaults: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-12 21:32:15] INFO - Skipping connectall.py script copy on Windows
+[2025-07-12 21:32:15] INFO - Skipping abcmidi installation on Windows
+[2025-07-12 21:32:15] INFO - Namespace(clear=False, display=None, fontdir=None, port=None, skipupdate=False, webinterface=None, rotatescreen='false', appmode='platform', leddriver='rpi_ws281x')
+[2025-07-12 21:32:15] INFO - SPI is not enabled. Enabling SPI interface...
+[2025-07-12 21:32:15] WARNING - Failed to enable SPI: Command '['sudo', 'raspi-config', 'nonint', 'do_spi', '0']' returned non-zero exit status 2147942405.
+[2025-07-12 21:32:15] INFO - Starting webinterface
+[2025-07-12 21:32:15] WARNING - Failed to load flying notes settings: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[2025-07-12 21:32:15] INFO - Flying notes components initialized successfully
+[2025-07-12 21:32:15] INFO - WebSocket listening on: 192.168.1.220:8765
+[2025-07-12 21:32:15] INFO - Creating new Hotspot profile...
+[2025-07-12 21:32:15] WARNING - An error occurred while creating the Hotspot profile: Command '['sudo', 'nmcli', 'connection', 'add', 'type', 'wifi', 'ifname', 'wlan0', 'con-name', 'Hotspot', 'autoconnect', 'no', 'ssid', 'PianoLEDVisualizer']' returned non-zero exit status 2147942405.
+[2025-07-12 21:32:15] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
+[2025-07-12 21:32:15] INFO - Hotspot is enabled in settings but not running. Starting hotspot...
+[2025-07-12 21:32:15] INFO - Enabling Hotspot
+[2025-07-12 21:32:20] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
+[2025-07-12 21:32:20] WARNING - Failed to start hotspot
