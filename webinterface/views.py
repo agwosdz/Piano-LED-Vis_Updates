@@ -165,25 +165,34 @@ def learn_colors_settings():
                         return [255, 255, 255]  # Default to white if invalid
                 return [255, 255, 255]  # Default to white if no color
             
+            # Helper function to create dimmed version of RGB array (30% brightness)
+            def dim_rgb_array(rgb_array, brightness_factor=0.3):
+                return [int(color * brightness_factor) for color in rgb_array]
+            
             # Update color settings in usersettings
             for hand in ['left_hand', 'right_hand']:
                 if hand in new_settings:
                     if 'white_current' in new_settings[hand]:
+                        # Set current color
                         setting_path = f"learn_colors/{hand}/white_keys/current"
                         rgb_array = hex_to_rgb_array(new_settings[hand]['white_current'])
                         app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
-                    if 'white_upcoming' in new_settings[hand]:
-                        setting_path = f"learn_colors/{hand}/white_keys/upcoming"
-                        rgb_array = hex_to_rgb_array(new_settings[hand]['white_upcoming'])
-                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
+                        
+                        # Automatically set dimmed upcoming color
+                        upcoming_path = f"learn_colors/{hand}/white_keys/upcoming"
+                        dimmed_rgb = dim_rgb_array(rgb_array)
+                        app_state.usersettings.change_setting_value(upcoming_path, str(dimmed_rgb))
+                    
                     if 'black_current' in new_settings[hand]:
+                        # Set current color
                         setting_path = f"learn_colors/{hand}/black_keys/current"
                         rgb_array = hex_to_rgb_array(new_settings[hand]['black_current'])
                         app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
-                    if 'black_upcoming' in new_settings[hand]:
-                        setting_path = f"learn_colors/{hand}/black_keys/upcoming"
-                        rgb_array = hex_to_rgb_array(new_settings[hand]['black_upcoming'])
-                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
+                        
+                        # Automatically set dimmed upcoming color
+                        upcoming_path = f"learn_colors/{hand}/black_keys/upcoming"
+                        dimmed_rgb = dim_rgb_array(rgb_array)
+                        app_state.usersettings.change_setting_value(upcoming_path, str(dimmed_rgb))
             
             # Reload settings in LearnMIDI if available
             if hasattr(app_state, 'learning') and app_state.learning:

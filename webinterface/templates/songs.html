@@ -594,53 +594,7 @@
 
             </div>
 
-            <div class="flex flex-wrap w-full md:w-1/2 m-auto">
-                <div class="w-full md:w-1/2 px-3 m-auto">
-                    <label class="block uppercase tracking-wide text-xs font-bold mt-2 text-gray-600 dark:text-gray-400"
-                           data-translate="left_hand_color">
-                        Left hand color
-                    </label>
-                    <div class="justify-center flex">
-                        <svg onclick="change_setting('change_handL_color', -1)" xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                        <div class="w-full justify-center flex text-sm text-gray-600 dark:text-gray-400">
-                            <svg class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <rect id="hand_colorL" width="30" height="30" style="fill:rgb(0,0,255);"/>
-                            </svg>
-                        </div>
-                        <svg onclick="change_setting('change_handL_color', 1)" xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </div>
 
-                </div>
-
-                <div class="w-full md:w-1/2 px-3 m-auto">
-                    <label class="block uppercase tracking-wide text-xs font-bold mt-2 text-gray-600 dark:text-gray-400"
-                           data-translate="right_hand_color">
-                        Right hand color
-                    </label>
-                    <div class="justify-center flex">
-                        <svg onclick="change_setting('change_handR_color', -1)" xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                        <div class="w-full justify-center flex text-sm text-gray-600 dark:text-gray-400">
-                            <svg class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <rect id="hand_colorR" width="30" height="30" style="fill:rgb(0,0,255);"/>
-                            </svg>
-                        </div>
-                        <svg onclick="change_setting('change_handR_color', 1)" xmlns="http://www.w3.org/2000/svg"
-                             class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </div>
-
-                </div>
-            </div>
 
             <!-- Enhanced Learn Controls -->
             <div class="w-full m-auto mt-6">
@@ -663,20 +617,12 @@
                         <h4 class="font-semibold mb-2 text-gray-600 dark:text-gray-400">Left Hand</h4>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Current</label>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys</label>
                                 <input type="color" id="left_white_current" class="w-full h-8 rounded" value="#0000FF">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Upcoming</label>
-                                <input type="color" id="left_white_upcoming" class="w-full h-8 rounded" value="#4444FF">
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Current</label>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys</label>
                                 <input type="color" id="left_black_current" class="w-full h-8 rounded" value="#0000AA">
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Upcoming</label>
-                                <input type="color" id="left_black_upcoming" class="w-full h-8 rounded" value="#3333AA">
                             </div>
                         </div>
                     </div>
@@ -686,20 +632,12 @@
                         <h4 class="font-semibold mb-2 text-gray-600 dark:text-gray-400">Right Hand</h4>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Current</label>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys</label>
                                 <input type="color" id="right_white_current" class="w-full h-8 rounded" value="#FF0000">
                             </div>
                             <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">White Keys - Upcoming</label>
-                                <input type="color" id="right_white_upcoming" class="w-full h-8 rounded" value="#FF4444">
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Current</label>
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys</label>
                                 <input type="color" id="right_black_current" class="w-full h-8 rounded" value="#AA0000">
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Black Keys - Upcoming</label>
-                                <input type="color" id="right_black_upcoming" class="w-full h-8 rounded" value="#AA3333">
                             </div>
                         </div>
                     </div>
@@ -728,15 +666,11 @@
                     .then(data => {
                         if (data.left_hand) {
                             document.getElementById('left_white_current').value = data.left_hand.white_current || '#0000FF';
-                            document.getElementById('left_white_upcoming').value = data.left_hand.white_upcoming || '#4444FF';
                             document.getElementById('left_black_current').value = data.left_hand.black_current || '#0000AA';
-                            document.getElementById('left_black_upcoming').value = data.left_hand.black_upcoming || '#3333AA';
                         }
                         if (data.right_hand) {
                             document.getElementById('right_white_current').value = data.right_hand.white_current || '#FF0000';
-                            document.getElementById('right_white_upcoming').value = data.right_hand.white_upcoming || '#FF4444';
                             document.getElementById('right_black_current').value = data.right_hand.black_current || '#AA0000';
-                            document.getElementById('right_black_upcoming').value = data.right_hand.black_upcoming || '#AA3333';
                         }
                     })
                     .catch(error => console.error('Error loading enhanced colors:', error));
@@ -746,15 +680,11 @@
                 const colorSettings = {
                     left_hand: {
                         white_current: document.getElementById('left_white_current').value,
-                        white_upcoming: document.getElementById('left_white_upcoming').value,
-                        black_current: document.getElementById('left_black_current').value,
-                        black_upcoming: document.getElementById('left_black_upcoming').value
+                        black_current: document.getElementById('left_black_current').value
                     },
                     right_hand: {
                         white_current: document.getElementById('right_white_current').value,
-                        white_upcoming: document.getElementById('right_white_upcoming').value,
-                        black_current: document.getElementById('right_black_current').value,
-                        black_upcoming: document.getElementById('right_black_upcoming').value
+                        black_current: document.getElementById('right_black_current').value
                     }
                 };
                 

@@ -158,6 +158,13 @@ class LearnMIDI:
         # Black keys are: C#, D#, F#, G#, A# (1, 3, 6, 8, 10)
         note_in_octave = note % 12
         return 'black' if note_in_octave in [1, 3, 6, 8, 10] else 'white'
+    
+    def get_note_type_from_position(self, position):
+        """Determine note type from LED position by converting back to MIDI note"""
+        # Convert LED position back to MIDI note number
+        # This is a reverse of the get_note_position function
+        note = position + self.ledsettings.led_offset
+        return self.get_note_type(note)
 
     def get_learn_color(self, hand, note_type, is_upcoming=False):
         """Get color based on hand, note type, and timing"""
@@ -400,11 +407,17 @@ class LearnMIDI:
                 self.mistakes_count += 1
                 if self.is_led_activeL == 0:
                     for expected_note in hand_hint_notesL:
-                        red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.prev_hand_colorL]]
+                        # Use enhanced color system for left hand
+                        note_type = self.get_note_type_from_position(expected_note)
+                        color = self.get_learn_color('left', note_type, is_upcoming=False)
+                        red, green, blue = [int(c * brightness) for c in color]
                         self.ledstrip.strip.setPixelColor(expected_note, Color(red, green, blue))
                 if self.is_led_activeR == 0:
                     for expected_note in hand_hint_notesR:
-                        red, green, blue = [int(c * brightness) for c in self.hand_colorList[self.prev_hand_colorR]]
+                        # Use enhanced color system for right hand
+                        note_type = self.get_note_type_from_position(expected_note)
+                        color = self.get_learn_color('right', note_type, is_upcoming=False)
+                        red, green, blue = [int(c * brightness) for c in color]
                         self.ledstrip.strip.setPixelColor(expected_note, Color(red, green, blue))
             else:
                 self.ledstrip.strip.setPixelColor(note_position, Color(0, 0, 0))

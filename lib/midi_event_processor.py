@@ -180,13 +180,15 @@ class MIDIEventProcessor:
         channel = find_between(str(msg), "channel=", " ")
         if channel == "12" or channel == "11":
             if self.ledsettings.skipped_notes != "Finger-based":
-                # Apply right hand or left hand color
+                # Apply right hand or left hand color using enhanced color system
+                note_type = self.learning.get_note_type(msg.note)
                 if channel == "12":
-                    hand_color = self.learning.hand_colorR
+                    hand = 'right'
                 else:
-                    hand_color = self.learning.hand_colorL
-
-                red, green, blue = map(int, self.learning.hand_colorList[hand_color])
+                    hand = 'left'
+                
+                color = self.learning.get_learn_color(hand, note_type, is_upcoming=False)
+                red, green, blue = map(int, color)
                 s_color = Color(red, green, blue)
                 self.ledstrip.strip.setPixelColor(note_position, s_color)
                 self.ledstrip.set_adjacent_colors(note_position, s_color, False)

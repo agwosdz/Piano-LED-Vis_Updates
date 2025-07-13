@@ -1194,25 +1194,26 @@ def change_setting():
 
         return jsonify(success=True, reload_learning_settings=True)
 
-    if setting_name == "change_handL_color":
-        value = int(value)
-        if app_state.learning.is_led_activeL == 1:
-            app_state.learning.hand_colorL += value
-            app_state.learning.hand_colorL = clamp(app_state.learning.hand_colorL, 0,
-                                                    len(app_state.learning.hand_colorList) - 1)
-            app_state.usersettings.change_setting_value("hand_colorL", app_state.learning.hand_colorL)
-
-        return jsonify(success=True, reload_learning_settings=True)
-
-    if setting_name == "change_handR_color":
-        value = int(value)
-        if app_state.learning.is_led_activeR == 1:
-            app_state.learning.hand_colorR += value
-            app_state.learning.hand_colorR = clamp(app_state.learning.hand_colorR, 0,
-                                                    len(app_state.learning.hand_colorList) - 1)
-            app_state.usersettings.change_setting_value("hand_colorR", app_state.learning.hand_colorR)
-
-        return jsonify(success=True, reload_learning_settings=True)
+    # Legacy hand color functions - disabled in favor of enhanced color system
+    # if setting_name == "change_handL_color":
+    #     value = int(value)
+    #     if app_state.learning.is_led_activeL == 1:
+    #         app_state.learning.hand_colorL += value
+    #         app_state.learning.hand_colorL = clamp(app_state.learning.hand_colorL, 0,
+    #                                                 len(app_state.learning.hand_colorList) - 1)
+    #         app_state.usersettings.change_setting_value("hand_colorL", app_state.learning.hand_colorL)
+    #
+    #     return jsonify(success=True, reload_learning_settings=True)
+    #
+    # if setting_name == "change_handR_color":
+    #     value = int(value)
+    #     if app_state.learning.is_led_activeR == 1:
+    #         app_state.learning.hand_colorR += value
+    #         app_state.learning.hand_colorR = clamp(app_state.learning.hand_colorR, 0,
+    #                                                 len(app_state.learning.hand_colorList) - 1)
+    #         app_state.usersettings.change_setting_value("hand_colorR", app_state.learning.hand_colorR)
+    #
+    #     return jsonify(success=True, reload_learning_settings=True)
 
     if setting_name == "change_wrong_notes":
         value = int(value)
