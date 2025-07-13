@@ -552,3 +552,5 @@ IndentationError: unindent does not match any outer indentation level
 [2025-07-12 21:06:56] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
 [2025-07-12 21:06:56] INFO - Hotspot is enabled in settings but not running. Starting hotspot...
 [2025-07-12 21:06:56] INFO - Enabling Hotspot
+[2025-07-12 21:07:01] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
+[2025-07-12 21:07:01] WARNING - Failed to start hotspot
