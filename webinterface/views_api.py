@@ -1750,7 +1750,7 @@ def usb_gadget_status():
     try:
         if hasattr(app_state, 'usb_midi_gadget') and app_state.usb_midi_gadget:
             status = {
-                'enabled': app_state.usb_midi_gadget.is_enabled(),
+                'enabled': app_state.usb_midi_gadget.is_enabled,
                 'available': app_state.usb_midi_gadget.check_prerequisites(),
                 'settings': {
                     'usb_gadget_enabled': app_state.usersettings.get_setting_value('usb_gadget_enabled'),
@@ -1840,7 +1840,7 @@ def usb_gadget_settings():
         
         # If gadget is enabled and settings changed, restart it
         if (hasattr(app_state, 'usb_midi_gadget') and app_state.usb_midi_gadget and 
-            app_state.usb_midi_gadget.is_enabled()):
+            app_state.usb_midi_gadget.is_enabled):
             app_state.usb_midi_gadget.disable_gadget()
             app_state.usb_midi_gadget.enable_gadget()
         
