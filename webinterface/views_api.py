@@ -1777,11 +1777,18 @@ def usb_gadget_status():
 def usb_gadget_enable():
     """Enable USB MIDI gadget"""
     try:
+        import platform
+        
         if not hasattr(app_state, 'usb_midi_gadget') or not app_state.usb_midi_gadget:
             return jsonify({'success': False, 'error': 'USB MIDI gadget not initialized'}), 400
         
         if not app_state.usb_midi_gadget.check_prerequisites():
-            return jsonify({'success': False, 'error': 'USB gadget prerequisites not met'}), 400
+            # Provide platform-specific error message
+            if platform.system() == 'Windows':
+                error_msg = 'USB MIDI gadget mode is only supported on Raspberry Pi hardware. This feature is not available on Windows.'
+            else:
+                error_msg = 'USB gadget prerequisites not met. Please ensure you are running on a Raspberry Pi with proper USB gadget support.'
+            return jsonify({'success': False, 'error': error_msg}), 400
         
         success = app_state.usb_midi_gadget.enable_gadget()
         if success:
@@ -1798,8 +1805,14 @@ def usb_gadget_enable():
 def usb_gadget_disable():
     """Disable USB MIDI gadget"""
     try:
+        import platform
+        
         if not hasattr(app_state, 'usb_midi_gadget') or not app_state.usb_midi_gadget:
             return jsonify({'success': False, 'error': 'USB MIDI gadget not initialized'}), 400
+        
+        # Check if running on Windows and provide informative message
+        if platform.system() == 'Windows':
+            return jsonify({'success': False, 'error': 'USB MIDI gadget mode is only supported on Raspberry Pi hardware. This feature is not available on Windows.'}), 400
         
         success = app_state.usb_midi_gadget.disable_gadget()
         if success:

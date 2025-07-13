@@ -50,6 +50,13 @@ class USBMIDIGadget:
     def check_prerequisites(self):
         """Check if the system supports USB gadget mode"""
         try:
+            import platform
+            
+            # Check if we're running on Windows
+            if platform.system() == 'Windows':
+                logger.warning("USB gadget mode is only supported on Raspberry Pi hardware, not Windows")
+                return False
+            
             # Check if we're running on a Raspberry Pi
             with open('/proc/cpuinfo', 'r') as f:
                 cpuinfo = f.read()
