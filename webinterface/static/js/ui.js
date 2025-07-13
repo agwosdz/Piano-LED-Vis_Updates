@@ -1583,3 +1583,116 @@ function handle_confirmation_button(element, delay = 1000) {
         element.classList.remove('pointer-events-none', "animate-pulse");
     }, delay);
 }
+
+function initialize_usb_gadget() {
+    get_usb_gadget_status();
+}
+
+function get_usb_gadget_status() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            const response = JSON.parse(this.responseText);
+            update_usb_gadget_status(response);
+        }
+    };
+    xhttp.open("GET", "/api/usb_gadget_status", true);
+    xhttp.send();
+}
+
+function update_usb_gadget_status(response) {
+    // Update status display
+    const statusElement = document.getElementById('gadget-status');
+    if (statusElement) {
+        statusElement.textContent = response.enabled ? 'Enabled' : 'Disabled';
+        statusElement.className = response.enabled ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold';
+    }
+
+    // Update enable/disable buttons
+    const enableBtn = document.getElementById('enable-gadget-btn');
+    const disableBtn = document.getElementById('disable-gadget-btn');
+    if (enableBtn && disableBtn) {
+        enableBtn.disabled = response.enabled;
+        disableBtn.disabled = !response.enabled;
+        enableBtn.className = response.enabled ? 
+            'px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed' : 
+            'px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700';
+        disableBtn.className = !response.enabled ? 
+            'px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed' : 
+            'px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700';
+    }
+
+    // Update settings form
+    const autoEnableCheckbox = document.getElementById('auto-enable');
+    if (autoEnableCheckbox) {
+        autoEnableCheckbox.checked = response.auto_enable;
+    }
+
+    const vendorIdInput = document.getElementById('vendor-id');
+    if (vendorIdInput) {
+        vendorIdInput.value = response.vendor_id;
+    }
+
+    const productIdInput = document.getElementById('product-id');
+    if (productIdInput) {
+        productIdInput.value = response.product_id;
+    }
+
+    const manufacturerInput = document.getElementById('manufacturer');
+    if (manufacturerInput) {
+        manufacturerInput.value = response.manufacturer;
+    }
+
+    const productNameInput = document.getElementById('product-name');
+    if (productNameInput) {
+        productNameInput.value = response.product_name;
+    }
+}
+
+function enable_usb_gadget() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            get_usb_gadget_status();
+        }
+    };
+    xhttp.open("POST", "/api/usb_gadget_enable", true);
+    xhttp.send();
+}
+
+function disable_usb_gadget() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            get_usb_gadget_status();
+        }
+    };
+    xhttp.open("POST", "/api/usb_gadget_disable", true);
+    xhttp.send();
+}
+
+function update_usb_gadget_settings() {
+    const autoEnable = document.getElementById('auto-enable').checked;
+    const vendorId = document.getElementById('vendor-id').value;
+    const productId = document.getElementById('product-id').value;
+    const manufacturer = document.getElementById('manufacturer').value;
+    const productName = document.getElementById('product-name').value;
+
+    const data = {
+        auto_enable: autoEnable,
+        vendor_id: vendorId,
+        product_id: productId,
+        manufacturer: manufacturer,
+        product_name: productName
+    };
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            get_usb_gadget_status();
+        }
+    };
+    xhttp.open("POST", "/api/usb_gadget_settings", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(data));
+}

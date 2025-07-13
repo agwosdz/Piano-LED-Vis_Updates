@@ -113,6 +113,10 @@ function loadAjax(subpage) {
                         get_wifi_list();
                         getCurrentLocalAddress();
                         break;
+                    case "usb_gadget":
+                        clearInterval(homepage_interval);
+                        initialize_usb_gadget();
+                        break;
                 }
             }
             translateStaticContent();
@@ -271,7 +275,7 @@ function checkSavedMode() {
     if (mode) {
         const modeSwitch = document.getElementById('modeSwitch');
 
-        if (mode === 'advanced') {
+        if (modeSwitch && mode === 'advanced') {
             modeSwitch.checked = true;
             setAdvancedMode(true);
         }
