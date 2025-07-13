@@ -65,7 +65,8 @@ class VisualizerApp:
                                                          self.component_initializer.midiports,
                                                          self.component_initializer.menu,
                                                          self.component_initializer.hotspot,
-                                                         self.component_initializer.platform)
+                                                         self.component_initializer.platform,
+                                                         self.component_initializer.usb_gadget)
         self.midi_event_processor = MIDIEventProcessor(self.component_initializer.midiports,
                                                        self.component_initializer.ledstrip,
                                                        self.component_initializer.ledsettings,

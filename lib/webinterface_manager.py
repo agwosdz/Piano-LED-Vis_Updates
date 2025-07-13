@@ -12,7 +12,7 @@ from lib.websocket_handler import WebSocketHandler
 
 
 class WebInterfaceManager:
-    def __init__(self, args, usersettings, ledsettings, ledstrip, learning, saving, midiports, menu, hotspot, platform):
+    def __init__(self, args, usersettings, ledsettings, ledstrip, learning, saving, midiports, menu, hotspot, platform, usb_gadget):
         self.args = args
         self.usersettings = usersettings
         self.ledsettings = ledsettings
@@ -23,6 +23,7 @@ class WebInterfaceManager:
         self.menu = menu
         self.hotspot = hotspot
         self.platform = platform
+        self.usb_gadget = usb_gadget
         self.websocket_loop = asyncio.new_event_loop()
         self.setup_web_interface()
 
@@ -39,6 +40,7 @@ class WebInterfaceManager:
             app_state.menu = self.menu
             app_state.hotspot = self.hotspot
             app_state.platform = self.platform
+            app_state.usb_midi_gadget = self.usb_gadget
 
             # Initialize flying notes components
             self._initialize_flying_notes()
