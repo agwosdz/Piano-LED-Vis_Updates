@@ -187,7 +187,7 @@ def learn_colors_settings():
             
             # Reload settings in LearnMIDI if available
             if hasattr(app_state, 'learning') and app_state.learning:
-                app_state.learning._load_enhanced_colors()
+                app_state.learning.reload_enhanced_colors()
             
             return jsonify(success=True, message="Color settings updated")
     

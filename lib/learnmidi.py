@@ -266,6 +266,10 @@ class LearnMIDI:
             self.hand_colorL = clamp(self.hand_colorL, 0, len(self.hand_colorList) - 1)
             self.usersettings.change_setting_value("hand_colorL", self.hand_colorL)
 
+    def reload_enhanced_colors(self):
+        """Reload enhanced color settings from user settings"""
+        self.learn_colors = self._load_enhanced_colors()
+
     def load_song_from_cache(self, song_path):
         # Load song from cache
         try:
