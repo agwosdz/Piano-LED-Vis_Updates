@@ -499,3 +499,4 @@ IndentationError: unindent does not match any outer indentation level
 [2025-07-12 20:14:49] INFO - Enabling Hotspot
 [2025-07-12 20:14:54] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
 [2025-07-12 20:14:54] WARNING - Failed to start hotspot
+[2025-07-12 20:20:24] INFO - WebSocket client connected: 2020046730016
