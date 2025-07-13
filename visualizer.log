@@ -500,3 +500,7 @@ IndentationError: unindent does not match any outer indentation level
 [2025-07-12 20:14:54] WARNING - Error checking hotspot status: [WinError 2] The system cannot find the file specified
 [2025-07-12 20:14:54] WARNING - Failed to start hotspot
 [2025-07-12 20:20:24] INFO - WebSocket client connected: 2020046730016
+[2025-07-12 20:21:54] INFO - WebSocket client disconnected: 2020046730016
+[2025-07-12 20:23:13] INFO - WebSocket client connected: 2020046730016
+[2025-07-12 20:23:27] ERROR - Failed to start animation: Server.emit() got an unexpected keyword argument 'broadcast'
+[2025-07-12 20:23:42] INFO - WebSocket client disconnected: 2020046730016

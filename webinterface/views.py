@@ -2,6 +2,7 @@ from webinterface import webinterface, app_state
 from flask import render_template, request, jsonify
 import os
 import time
+import webcolors as wc
 from lib.flying_notes_renderer import FlyingNotesRenderer
 from lib.websocket_handler import WebSocketHandler, FlyingNotesWebSocketClient
 
@@ -122,19 +123,31 @@ def learn_colors_settings():
     """API endpoint to get or update enhanced learn color settings"""
     try:
         if request.method == 'GET':
+            # Helper function to convert RGB array to hex color
+            def rgb_array_to_hex(rgb_str):
+                if rgb_str:
+                    try:
+                        import ast
+                        rgb_array = ast.literal_eval(rgb_str)
+                        if isinstance(rgb_array, list) and len(rgb_array) >= 3:
+                            return wc.rgb_to_hex((rgb_array[0], rgb_array[1], rgb_array[2]))
+                    except (ValueError, SyntaxError):
+                        pass
+                return '#FFFFFF'  # Default to white if invalid
+            
             # Get current color settings from usersettings
             settings = {
                 'left_hand': {
-                    'white_current': app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/current"),
-                    'white_upcoming': app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/upcoming"),
-                    'black_current': app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/current"),
-                    'black_upcoming': app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/upcoming")
+                    'white_current': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/current")),
+                    'white_upcoming': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/left_hand/white_keys/upcoming")),
+                    'black_current': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/current")),
+                    'black_upcoming': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/left_hand/black_keys/upcoming"))
                 },
                 'right_hand': {
-                    'white_current': app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/current"),
-                    'white_upcoming': app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/upcoming"),
-                    'black_current': app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/current"),
-                    'black_upcoming': app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/upcoming")
+                    'white_current': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/current")),
+                    'white_upcoming': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/right_hand/white_keys/upcoming")),
+                    'black_current': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/current")),
+                    'black_upcoming': rgb_array_to_hex(app_state.usersettings.get_setting_value("learn_colors/right_hand/black_keys/upcoming"))
                 }
             }
             return jsonify(success=True, settings=settings)
@@ -142,21 +155,35 @@ def learn_colors_settings():
         elif request.method == 'POST':
             new_settings = request.get_json()
             
+            # Helper function to convert hex color to RGB array
+            def hex_to_rgb_array(hex_color):
+                if hex_color and hex_color.startswith('#'):
+                    try:
+                        rgb = wc.hex_to_rgb(hex_color)
+                        return [rgb.red, rgb.green, rgb.blue]
+                    except ValueError:
+                        return [255, 255, 255]  # Default to white if invalid
+                return [255, 255, 255]  # Default to white if no color
+            
             # Update color settings in usersettings
             for hand in ['left_hand', 'right_hand']:
                 if hand in new_settings:
                     if 'white_current' in new_settings[hand]:
                         setting_path = f"learn_colors/{hand}/white_keys/current"
-                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['white_current'])
+                        rgb_array = hex_to_rgb_array(new_settings[hand]['white_current'])
+                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
                     if 'white_upcoming' in new_settings[hand]:
                         setting_path = f"learn_colors/{hand}/white_keys/upcoming"
-                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['white_upcoming'])
+                        rgb_array = hex_to_rgb_array(new_settings[hand]['white_upcoming'])
+                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
                     if 'black_current' in new_settings[hand]:
                         setting_path = f"learn_colors/{hand}/black_keys/current"
-                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['black_current'])
+                        rgb_array = hex_to_rgb_array(new_settings[hand]['black_current'])
+                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
                     if 'black_upcoming' in new_settings[hand]:
                         setting_path = f"learn_colors/{hand}/black_keys/upcoming"
-                        app_state.usersettings.change_setting_value(setting_path, new_settings[hand]['black_upcoming'])
+                        rgb_array = hex_to_rgb_array(new_settings[hand]['black_upcoming'])
+                        app_state.usersettings.change_setting_value(setting_path, str(rgb_array))
             
             # Reload settings in LearnMIDI if available
             if hasattr(app_state, 'learning') and app_state.learning:
