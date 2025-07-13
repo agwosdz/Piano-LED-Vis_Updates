@@ -1194,8 +1194,9 @@ function get_learning_status(loop_call = false) {
                 let hand_colorR_RGB = response.hand_colorList[hand_colorR][0] + ", " + response.hand_colorList[hand_colorR][1] + ", " + response.hand_colorList[hand_colorR][2];
                 let hand_colorL_RGB = response.hand_colorList[hand_colorL][0] + ", " + response.hand_colorList[hand_colorL][1] + ", " + response.hand_colorList[hand_colorL][2];
 
-                document.getElementById("hand_colorR").style.fill = 'rgb(' + hand_colorR_RGB + ')';
-                document.getElementById("hand_colorL").style.fill = 'rgb(' + hand_colorL_RGB + ')';
+                // Legacy hand color elements removed - using enhanced color system
+                // document.getElementById("hand_colorR").style.fill = 'rgb(' + hand_colorR_RGB + ')';
+                // document.getElementById("hand_colorL").style.fill = 'rgb(' + hand_colorL_RGB + ')';
 
                 document.getElementById("number_of_mistakes").value = response["number_of_mistakes"];
 
@@ -1242,10 +1243,11 @@ function get_learning_status(loop_call = false) {
                         isLedActiveLEl.checked = true;
                     } else {
                         isLedActiveLEl.checked = false;
-                        const handColorLEl = document.getElementById("hand_colorL");
-                        if (handColorLEl) {
-                            handColorLEl.style.fill = 'rgb(0,0,0)';
-                        }
+                        // Legacy hand color element removed - using enhanced color system
+                        // const handColorLEl = document.getElementById("hand_colorL");
+                        // if (handColorLEl) {
+                        //     handColorLEl.style.fill = 'rgb(0,0,0)';
+                        // }
                     }
                 }
 
@@ -1255,10 +1257,11 @@ function get_learning_status(loop_call = false) {
                         isLedActiveREl.checked = true;
                     } else {
                         isLedActiveREl.checked = false;
-                        const handColorREl = document.getElementById("hand_colorR");
-                        if (handColorREl) {
-                            handColorREl.style.fill = 'rgb(0,0,0)';
-                        }
+                        // Legacy hand color element removed - using enhanced color system
+                        // const handColorREl = document.getElementById("hand_colorR");
+                        // if (handColorREl) {
+                        //     handColorREl.style.fill = 'rgb(0,0,0)';
+                        // }
                     }
                 }
             }
