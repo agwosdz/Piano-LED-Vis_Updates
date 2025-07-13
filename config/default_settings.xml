@@ -161,4 +161,12 @@
 
     <hotspot_password>visualizer</hotspot_password>
 
+    <!-- USB MIDI Gadget Settings -->
+    <usb_gadget_enabled>False</usb_gadget_enabled>
+    <usb_gadget_auto_enable>False</usb_gadget_auto_enable>
+    <usb_gadget_vendor_id>0x1d6b</usb_gadget_vendor_id>
+    <usb_gadget_product_id>0x0104</usb_gadget_product_id>
+    <usb_gadget_manufacturer>Piano LED Visualizer</usb_gadget_manufacturer>
+    <usb_gadget_product_name>Piano LED MIDI Device</usb_gadget_product_name>
+
 </settings>

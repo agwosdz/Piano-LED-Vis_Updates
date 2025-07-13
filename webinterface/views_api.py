@@ -1743,6 +1743,99 @@ def get_logs():
 def get_colormap_gradients():
     return jsonify(cmap.colormaps_preview)
 
+
+@webinterface.route('/api/usb_gadget_status', methods=['GET'])
+def usb_gadget_status():
+    """Get USB MIDI gadget status and settings"""
+    try:
+        if hasattr(app_state, 'usb_midi_gadget') and app_state.usb_midi_gadget:
+            status = {
+                'enabled': app_state.usb_midi_gadget.is_enabled(),
+                'available': app_state.usb_midi_gadget.check_prerequisites(),
+                'settings': {
+                    'usb_gadget_enabled': app_state.usersettings.get_setting_value('usb_gadget_enabled'),
+                    'usb_gadget_auto_enable': app_state.usersettings.get_setting_value('usb_gadget_auto_enable'),
+                    'usb_gadget_vendor_id': app_state.usersettings.get_setting_value('usb_gadget_vendor_id'),
+                    'usb_gadget_product_id': app_state.usersettings.get_setting_value('usb_gadget_product_id'),
+                    'usb_gadget_manufacturer': app_state.usersettings.get_setting_value('usb_gadget_manufacturer'),
+                    'usb_gadget_product_name': app_state.usersettings.get_setting_value('usb_gadget_product_name')
+                }
+            }
+        else:
+            status = {
+                'enabled': False,
+                'available': False,
+                'error': 'USB MIDI gadget not initialized'
+            }
+        return jsonify(status)
+    except Exception as e:
+        logger.error(f"Error getting USB gadget status: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@webinterface.route('/api/usb_gadget_enable', methods=['POST'])
+def usb_gadget_enable():
+    """Enable USB MIDI gadget"""
+    try:
+        if not hasattr(app_state, 'usb_midi_gadget') or not app_state.usb_midi_gadget:
+            return jsonify({'success': False, 'error': 'USB MIDI gadget not initialized'}), 400
+        
+        if not app_state.usb_midi_gadget.check_prerequisites():
+            return jsonify({'success': False, 'error': 'USB gadget prerequisites not met'}), 400
+        
+        success = app_state.usb_midi_gadget.enable_gadget()
+        if success:
+            app_state.usersettings.change_setting_value('usb_gadget_enabled', 'True')
+            return jsonify({'success': True, 'message': 'USB MIDI gadget enabled'})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to enable USB MIDI gadget'}), 500
+    except Exception as e:
+        logger.error(f"Error enabling USB gadget: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@webinterface.route('/api/usb_gadget_disable', methods=['POST'])
+def usb_gadget_disable():
+    """Disable USB MIDI gadget"""
+    try:
+        if not hasattr(app_state, 'usb_midi_gadget') or not app_state.usb_midi_gadget:
+            return jsonify({'success': False, 'error': 'USB MIDI gadget not initialized'}), 400
+        
+        success = app_state.usb_midi_gadget.disable_gadget()
+        if success:
+            app_state.usersettings.change_setting_value('usb_gadget_enabled', 'False')
+            return jsonify({'success': True, 'message': 'USB MIDI gadget disabled'})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to disable USB MIDI gadget'}), 500
+    except Exception as e:
+        logger.error(f"Error disabling USB gadget: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@webinterface.route('/api/usb_gadget_settings', methods=['POST'])
+def usb_gadget_settings():
+    """Update USB MIDI gadget settings"""
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'error': 'No data provided'}), 400
+        
+        # Update settings
+        for key, value in data.items():
+            if key.startswith('usb_gadget_'):
+                app_state.usersettings.change_setting_value(key, str(value))
+        
+        # If gadget is enabled and settings changed, restart it
+        if (hasattr(app_state, 'usb_midi_gadget') and app_state.usb_midi_gadget and 
+            app_state.usb_midi_gadget.is_enabled()):
+            app_state.usb_midi_gadget.disable_gadget()
+            app_state.usb_midi_gadget.enable_gadget()
+        
+        return jsonify({'success': True, 'message': 'Settings updated'})
+    except Exception as e:
+        logger.error(f"Error updating USB gadget settings: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 def pretty_print(dom):
     return '\n'.join([line for line in dom.toprettyxml(indent=' ' * 4).split('\n') if line.strip()])
 

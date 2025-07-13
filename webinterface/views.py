@@ -72,6 +72,11 @@ def flying_notes():
     return render_template('flying_notes.html')
 
 
+@webinterface.route('/usb_gadget')
+def usb_gadget():
+    return render_template('usb_gadget.html')
+
+
 @webinterface.route('/api/flying_notes/start', methods=['POST'])
 def start_flying_notes():
     """API endpoint to start flying notes animation"""

@@ -64,6 +64,7 @@ const translations = {
         ports_settings: "Ports Settings",
         led_animations: "LED Animations",
         wifi: "Wi-Fi",
+        usb_gadget: "USB MIDI Gadget",
         switch_ports: "Switch Ports",
         view_on_github: "View on GitHub",
         join_discord: "Join Discord server",
