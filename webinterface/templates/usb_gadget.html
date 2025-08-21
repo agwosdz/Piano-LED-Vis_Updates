@@ -156,7 +156,14 @@ let gadgetStatus = {
 
 function loadUSBGadgetStatus() {
     fetch('/api/usb_gadget_status')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'HTTP error ' + response.status);
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             gadgetStatus = data;
             updateStatusDisplay();
@@ -164,7 +171,10 @@ function loadUSBGadgetStatus() {
         })
         .catch(error => {
             console.error('Error loading USB gadget status:', error);
-            document.getElementById('status-text').textContent = 'Error loading status';
+            const statusTextElement = document.getElementById('status-text');
+            if (statusTextElement) {
+                statusTextElement.textContent = 'Error loading status';
+            }
         });
 }
 
@@ -172,6 +182,12 @@ function updateStatusDisplay() {
     const statusText = document.getElementById('status-text');
     const enableBtn = document.getElementById('enable-gadget');
     const disableBtn = document.getElementById('disable-gadget');
+    
+    // Check if elements exist before manipulating them
+    if (!statusText || !enableBtn || !disableBtn) {
+        console.error('Required elements not found for status display');
+        return;
+    }
     
     if (gadgetStatus.enabled) {
         statusText.textContent = 'Enabled';
@@ -209,7 +225,14 @@ function updateSettingsForm() {
 
 function enableUSBGadget() {
     fetch('/api/usb_gadget_enable', { method: 'POST' })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'HTTP error ' + response.status);
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 showNotification('USB MIDI gadget enabled successfully', 'success');
@@ -220,13 +243,20 @@ function enableUSBGadget() {
         })
         .catch(error => {
             console.error('Error enabling USB gadget:', error);
-            showNotification('Error enabling USB MIDI gadget', 'error');
+            showNotification('Error enabling USB MIDI gadget: ' + error.message, 'error');
         });
 }
 
 function disableUSBGadget() {
     fetch('/api/usb_gadget_disable', { method: 'POST' })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'HTTP error ' + response.status);
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 showNotification('USB MIDI gadget disabled successfully', 'success');
@@ -237,7 +267,7 @@ function disableUSBGadget() {
         })
         .catch(error => {
             console.error('Error disabling USB gadget:', error);
-            showNotification('Error disabling USB MIDI gadget', 'error');
+            showNotification('Error disabling USB MIDI gadget: ' + error.message, 'error');
         });
 }
 
@@ -257,7 +287,14 @@ function saveUSBGadgetSettings() {
         },
         body: JSON.stringify(settings)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'HTTP error ' + response.status);
+            });
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             showNotification('Settings saved successfully', 'success');
@@ -268,7 +305,7 @@ function saveUSBGadgetSettings() {
     })
     .catch(error => {
         console.error('Error saving settings:', error);
-        showNotification('Error saving settings', 'error');
+        showNotification('Error saving settings: ' + error.message, 'error');
     });
 }
 
